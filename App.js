@@ -17,6 +17,8 @@ import {
   Button
 } from 'react-native';
 
+import Header from './src/components/header';
+
 import { BleManager } from 'react-native-ble-plx';
 import KalmanFilter from 'kalmanjs';
 
@@ -56,25 +58,31 @@ export default class App extends Component<Props> {
         }
     });
     const subscription = this.manager.onStateChange((state) => {
+        console.log(state);
         if (state === 'PoweredOn') {
-            // this.scanAndConnect();
+            console.log('before');
+            this.manager.startDeviceScan(['00000000-0000-1000-8000-00805F9B34FB']);
+            console.log('after');
             subscription.remove();
         }
     }, true);
   }
 
   openQrScanner() {
-    // console.log(RNCamera);
+    // console.log(this.manager);
+
   }
 
   render() {
     return (
       <View style={styles.container}>
+      <Header></Header>
+      <View style={styles.container}>
         <StatusBar 
           barStyle="dark-content"
           backgroundColor="#4F6D7A" />
-        <Text style={styles.welcome}>LighterJack v2.0</Text>
         <Button title={instructions} onPress={this.openQrScanner}/>
+      </View>
       </View>
     );
   }

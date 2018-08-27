@@ -9,7 +9,7 @@ import {
 
 
 const displayText = Platform.select({
-  ios: 'this is the header - iOS',
+  ios: 'LJv2.0 - iOS',
   android:
     'Double tap R on your keyboard to reload,\n' +
     'Shake or press menu button for dev menu',
@@ -25,12 +25,12 @@ export default class Header extends Component<Props> {
   }
 
   componentWillMount() {
-    const displayText = "second screen"
+    // const displayText = "LJv2.0"
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.header}>
         <Text title={displayText} style={styles.displayText}> {displayText} </Text>
       </View>
     );
@@ -38,7 +38,14 @@ export default class Header extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    backgroundColor: 'black',
+    width: '100%',
+    padding: 10,
+    alignItems: 'center'
+  },
   displayText: {
-    color: 'black',
+    color: 'white',
+    fontSize: 24,
   }
 });
