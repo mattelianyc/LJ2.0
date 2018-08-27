@@ -14,16 +14,14 @@ import {
   Text,
   View,
   StatusBar,
-  Button
+  Button,
+  AsyncStorage
 } from 'react-native';
 
 import Header from './src/components/header';
 
 import { BleManager } from 'react-native-ble-plx';
 import KalmanFilter from 'kalmanjs';
-
-import RNCamera from 'react-native-camera';
-import QRCodeScanner from 'react-native-qrcode-scanner';
 
 
 const instructions = Platform.select({
@@ -40,9 +38,14 @@ export default class App extends Component<Props> {
 
   constructor() {
       super();
+      
+      // async storage
+      // console.log(AsyncStorage.setItem('asdfa'));
+      
       // ble manager
       this.manager = new BleManager();
       console.log(this.manager);
+      
       // kalman filter
       const kf = new KalmanFilter();
       console.log(kf);
@@ -76,13 +79,13 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-      <Header></Header>
-      <View style={styles.container}>
         <StatusBar 
-          barStyle="dark-content"
+          barStyle="light-content"
           backgroundColor="#4F6D7A" />
-        <Button title={instructions} onPress={this.openQrScanner}/>
-      </View>
+        <Header></Header>
+        <View style={styles.container}>
+          <Button title={instructions} onPress={this.openQrScanner}/>
+        </View>
       </View>
     );
   }
