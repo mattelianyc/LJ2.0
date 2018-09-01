@@ -23,7 +23,6 @@ import Header from './src/components/header';
 import { BleManager } from 'react-native-ble-plx';
 import KalmanFilter from 'kalmanjs';
 
-
 const instructions = Platform.select({
   ios: 'Click to Scan QR Code',
   android:
@@ -40,7 +39,8 @@ export default class App extends Component<Props> {
       super();
       
       // async storage
-      // console.log(AsyncStorage.setItem('asdfa'));
+      var storedValue = AsyncStorage.setItem('asdfa', '23514');
+      console.log(storedValue);
       
       // ble manager
       this.manager = new BleManager();
@@ -72,7 +72,7 @@ export default class App extends Component<Props> {
   }
 
   openQrScanner() {
-    // console.log(this.manager);
+    console.log(BleManager);
 
   }
 
@@ -82,7 +82,7 @@ export default class App extends Component<Props> {
         <StatusBar 
           barStyle="light-content"
           backgroundColor="#4F6D7A" />
-        <Header></Header>
+        <Header />
         <View style={styles.container}>
           <Button title={instructions} onPress={this.openQrScanner}/>
         </View>

@@ -10,9 +10,7 @@ import {
 
 const displayText = Platform.select({
   ios: 'LJv2.0 - iOS',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
+  android: 'LJv2.0 - Android',
 });
 
 
