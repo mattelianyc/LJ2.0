@@ -19,10 +19,10 @@ import {
 } from 'react-native';
 
 import Header from './src/components/header';
+import Rssi from './src/components/rssi';
 
 import { BleManager } from 'react-native-ble-plx';
 import KalmanFilter from 'kalmanjs';
-
 
 const instructions = Platform.select({
   ios: 'Click to Scan QR Code',
@@ -34,46 +34,54 @@ const instructions = Platform.select({
 
 type Props = {};
 
+// this.manager = new BleManager({
+//   restoreStateIdentifier: 'testBleBackgroundMode',
+//   restoreStateFunction: bleRestoredState => {
+//     console.log(bleRestoredState);
+//   }
+// });
+
 export default class App extends Component<Props> {
 
   constructor() {
       super();
       
+      this.setState({rssi: 0});
       // async storage
       // console.log(AsyncStorage.setItem('asdfa'));
       
-      // ble manager
       this.manager = new BleManager();
-      console.log(this.manager);
-      
-      // kalman filter
       const kf = new KalmanFilter();
+      
+      //BACKGROUND MODE WORKS, DO WE NEED THIS?
+      // this.manager = new BleManager({
+      //   restoreStateIdentifier: 'testBleBackgroundMode',
+      //   restoreStateFunction: bleRestoredState => {
+      //     console.log(bleRestoredState);
+      //   }
+      // });
+
+      console.log(this.manager);
       console.log(kf);
+
+      this.manager.connectToDevice('41E51E25-81D7-C321-2390-6B4FBDC3EDF6')
+        .then((data) => {
+          console.log('Current data: ' + data);
+          this.manager.readRSSIForDevice('41E51E25-81D7-C321-2390-6B4FBDC3EDF6')
+            .then((rssi) => {
+              console.log('current rssi' + rssi.rssi);              
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
   }
 
   componentWillMount() {
     const instructions = "click to capture QR oode"
-    // BLE Background Manager
-    this.manager = new BleManager({
-        restoreStateIdentifier: 'testBleBackgroundMode',
-        restoreStateFunction: bleRestoredState => {
-          console.log(bleRestoredState);
-        }
-    });
-    const subscription = this.manager.onStateChange((state) => {
-        console.log(state);
-        if (state === 'PoweredOn') {
-            console.log('before');
-            this.manager.startDeviceScan(['00000000-0000-1000-8000-00805F9B34FB']);
-            console.log('after');
-            subscription.remove();
-        }
-    }, true);
-  }
-
-  openQrScanner() {
-    // console.log(this.manager);
-
   }
 
   render() {
@@ -84,7 +92,8 @@ export default class App extends Component<Props> {
           backgroundColor="#4F6D7A" />
         <Header></Header>
         <View style={styles.container}>
-          <Button title={instructions} onPress={this.openQrScanner}/>
+          <Rssi rssi={this.state} />
+          <Button title={instructions} onPress={this.connectToPeripheral} />
         </View>
       </View>
     );
