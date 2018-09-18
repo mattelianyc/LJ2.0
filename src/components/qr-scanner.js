@@ -13,7 +13,7 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 
 type Props = {};
 
-export default class QrScanner extends Component<Props> {
+export default class QRScanner extends Component<Props> {
 
   onSuccess(e) {
     Linking
