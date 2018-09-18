@@ -15,7 +15,8 @@ import {
   View,
   StatusBar,
   Button,
-  AsyncStorage
+  AsyncStorage,
+  Alert,
 } from 'react-native';
 
 import Header from './src/components/header';
@@ -46,7 +47,6 @@ export default class App extends Component<Props> {
   constructor() {
       super();
       
-      this.setState({rssi: 0});
       // async storage
       // console.log(AsyncStorage.setItem('asdfa'));
       
@@ -64,16 +64,33 @@ export default class App extends Component<Props> {
       console.log(this.manager);
       console.log(kf);
 
+
+
       this.manager.connectToDevice('41E51E25-81D7-C321-2390-6B4FBDC3EDF6')
         .then((data) => {
           console.log('Current data: ' + data);
-          this.manager.readRSSIForDevice('41E51E25-81D7-C321-2390-6B4FBDC3EDF6')
-            .then((rssi) => {
-              console.log('current rssi' + rssi.rssi);              
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+          setInterval(() => {
+            this.manager.readRSSIForDevice('41E51E25-81D7-C321-2390-6B4FBDC3EDF6')
+              .then((data) => {
+                console.log('current rssi' + data.rssi);              
+                console.log('filtered rssi' + kf.filter(data.rssi));              
+
+                if (kf.filter(data.rssi) < -100) {
+                  Alert.alert(
+                    'LighterJack',
+                    'Get your lighter back.',
+                    [
+                      {text: 'OK', onPress: () => console.log('OK Pressed')},
+                    ],
+                    { cancelable: false }
+                  )
+                }
+                
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }, 3000);
         })
         .catch((error) => {
           console.log(error);
@@ -82,6 +99,10 @@ export default class App extends Component<Props> {
 
   componentWillMount() {
     const instructions = "click to capture QR oode"
+  }
+
+  componentDidMount() {
+
   }
 
   render() {
