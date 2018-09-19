@@ -10,7 +10,7 @@ import {
 
 type Props = {};
 
-export default class Header extends Component<Props> {
+export default class Rssi extends Component<Props> {
 
   constructor() {
     super();

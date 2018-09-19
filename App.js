@@ -1,18 +1,13 @@
 import React, {Component} from 'react';
-
 import {
   Platform,
   StyleSheet,
   Text,
   View,
-  StatusBar,
-  Button,
-  AsyncStorage,
-  Alert,
 } from 'react-native';
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+
 import HomeScreen from './src/screens/HomeScreen';
 import QRScreen from './src/screens/QRScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
@@ -40,7 +35,6 @@ export default class App extends Component<Props> {
     const HomeStack = createStackNavigator({
       Home: { screen: HomeScreen },
       QR: { screen: QRScreen },
-      Details: { screen: DetailsScreen },
     });
 
     const SettingsStack = createStackNavigator({
@@ -60,7 +54,7 @@ export default class App extends Component<Props> {
           if (routeName === 'Home') {
             iconName = `ios-information-circle${focused ? '' : '-outline'}`;
           } else if (routeName === 'Settings') {
-            iconName = `ios-options${focused ? '' : '-outline'}`;
+            iconName = `ios-settings${focused ? '' : '-outline'}`;
           }
 
           // You can return any component that you like here! We usually use an
@@ -69,7 +63,7 @@ export default class App extends Component<Props> {
         },
       }),
       tabBarOptions: {
-        activeTintColor: 'tomato',
+        activeTintColor: 'cadetblue',
         inactiveTintColor: 'gray',
       },
     });
@@ -77,8 +71,6 @@ export default class App extends Component<Props> {
     return <MainNavigator />;
   }
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
