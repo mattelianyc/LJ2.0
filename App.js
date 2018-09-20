@@ -52,9 +52,9 @@ export default class App extends Component<Props> {
           const { routeName } = navigation.state;
           let iconName;
           if (routeName === 'Home') {
-            iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+            iconName = `${focused ? 'ios-information-circle' : 'ios-information-circle-outline'}`;
           } else if (routeName === 'Settings') {
-            iconName = `ios-settings${focused ? '' : '-outline'}`;
+            iconName = `${focused ? 'ios-help-circle' : 'ios-help-circle-outline'}`;
           }
 
           // You can return any component that you like here! We usually use an
