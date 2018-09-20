@@ -3,9 +3,8 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
-  Linking,
-  Platform
+  View,
+  Button,
 } from 'react-native';
 
 import RNCamera from 'react-native-camera';
@@ -15,10 +14,20 @@ type Props = {};
 
 export default class QRScanner extends Component<Props> {
 
+  constructor() {
+    super();
+  }
+
+  componentWillMount() {
+    this.setState({ uuid: null });
+  }
+
   onSuccess(e) {
-    Linking
-      .openURL(e.data)
-      .catch(err => console.error('An error occured', err));
+    this.setState({ uuid: e.data });
+    // AsyncStorage.setItem('@UUID:key', e.data);
+  }
+
+  establishConnection(uuid) {
   }
 
   render() {
@@ -26,14 +35,12 @@ export default class QRScanner extends Component<Props> {
       <QRCodeScanner
         onRead={this.onSuccess.bind(this)}
         topContent={
-          <Text style={styles.centerText}>
-            Go to <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on your computer and scan the QR code.
-          </Text>
+          <Text style={styles.centerText}>{this.state.uuid}</Text>
         }
         bottomContent={
-          <TouchableOpacity style={styles.buttonTouchable}>
-            <Text style={styles.buttonText}>OK. Got it!</Text>
-          </TouchableOpacity>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+            { this.state.uuid ? <Button onPress={() => console.log('uuid: '+this.state.uuid+'')} title={'Connect To Device'} /> : <Text>Scan QR Code</Text> }
+          </View>
         }
       />
     );
