@@ -24,6 +24,7 @@ export default class QRScanner extends Component<Props> {
 
   onSuccess(e) {
     this.setState({ uuid: e.data });
+    this.props.navigate('Active', { uuid: this.state.uuid })
     // AsyncStorage.setItem('@UUID:key', e.data);
   }
 
@@ -36,7 +37,6 @@ export default class QRScanner extends Component<Props> {
         }
         bottomContent={
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-            { this.state.uuid ? <Button onPress={() => this.props.navigate('Home', { uuid: this.state.uuid })} title={'Connect To Device'} /> : <Text>Scan QR Code</Text> }
           </View>
         }
       />

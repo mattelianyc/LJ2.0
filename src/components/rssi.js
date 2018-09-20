@@ -7,7 +7,8 @@ import {
   Alert,
 } from 'react-native';
 
-type Props = {};
+import { BleManager } from 'react-native-ble-plx';
+import KalmanFilter from 'kalmanjs';
 
 export default class Rssi extends Component<Props> {
 
@@ -66,7 +67,6 @@ export default class Rssi extends Component<Props> {
   render() {
     return (
       <View style={styles.header}>
-        <Text title={displayText} style={styles.displayText}> {displayText} </Text>
       </View>
     );
   }
