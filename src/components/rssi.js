@@ -7,7 +7,6 @@ import {
   Alert,
 } from 'react-native';
 
-
 type Props = {};
 
 export default class Rssi extends Component<Props> {
@@ -61,6 +60,7 @@ export default class Rssi extends Component<Props> {
 
   componentWillMount() {
     // const displayText = "LJv2.0"
+    console.log(this.props.uuid);
   }
 
   render() {

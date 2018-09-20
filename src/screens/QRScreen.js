@@ -9,8 +9,9 @@ import QrScanner from '../components/qr-scanner';
 
 export default class QRScreen extends React.Component {
   render() {
+  	const { navigate } = this.props.navigation;
     return (
-      <QrScanner />
+      <QrScanner navigate={ navigate } />
     );
   }
 }
