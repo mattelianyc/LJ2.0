@@ -105,7 +105,7 @@ export default class Bluetooth extends Component<Props> {
 	          				console.log(data.rssi);
 	          				this.setState({ rssi: data.rssi });
 	          			});
-	            }, 1000);
+	            }, 1669);
 	          }, (error) => {
 	            this.error(error.message)
 	          	let concatenatedTerminalArray= this.state.terminal.concat('error'+error.message);
@@ -159,7 +159,7 @@ export default class Bluetooth extends Component<Props> {
             );
         	})
       	}
-				{this.state.loading ? null : <View><Text style={styles.terminalTextSuccess}>{'RSSI: '+this.state.rssi}</Text><Text style={styles.terminalTextSuccess}>{'Kalman: '+parseFloat(this.kf.filter(this.state.rssi).toFixed(5))}</Text></View> }
+				{this.state.loading ? null : <Text style={styles.terminalTextSuccess}>{'R: '+this.state.rssi+'   K: '+parseFloat(this.kf.filter(this.state.rssi).toFixed(5))}</Text> }
       </View>
     );
   }
