@@ -2,7 +2,8 @@ import React from 'react';
 import { 
 	View, 
 	Text,
-	Button,
+  Button,
+	Image,
 } from 'react-native';
 
 export default class DetailsScreen extends React.Component {

@@ -69,8 +69,8 @@ export default class App extends Component<Props> {
         },
       }),
       tabBarOptions: {
-        activeTintColor: 'cadetblue',
-        inactiveTintColor: 'gray',
+        activeTintColor: 'tomato',
+        inactiveTintColor: 'lightblue',
       },
     });
 
@@ -82,8 +82,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    alignItems: 'center'
   },
   welcome: {
     fontSize: 20,

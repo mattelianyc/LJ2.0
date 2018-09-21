@@ -103,8 +103,7 @@ export default class Rssi extends Component<Props> {
 	          				let concatenatedRSSIArray = this.state.rssi.concat(data.rssi);
 	          				this.setState({ rssi: concatenatedRSSIArray });
 	          			});
-	            }, 1000);
-
+	            }, 2000);
 	          }, (error) => {
 	            this.error(error.message)
 	          	let concatenatedTerminalArray= this.state.terminal.concat('error'+error.message);
