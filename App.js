@@ -15,6 +15,9 @@ import ActiveScreen from './src/screens/ActiveScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import DetailsScreen from './src/screens/DetailsScreen';
 
+import { BleManager } from 'react-native-ble-plx';
+import KalmanFilter from 'kalmanjs';
+
 const instructions = Platform.select({
   ios: 'Click to Scan QR Code',
   android:
