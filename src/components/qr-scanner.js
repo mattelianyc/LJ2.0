@@ -32,9 +32,6 @@ export default class QRScanner extends Component<Props> {
     return (
       <QRCodeScanner
         onRead={this.onSuccess.bind(this)}
-        topContent={
-          <Text style={styles.centerText}>{this.state.uuid}</Text>
-        }
       />
     );
   }

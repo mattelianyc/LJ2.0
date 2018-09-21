@@ -7,7 +7,7 @@ import {
   Image,
 } from 'react-native';
 
-import Rssi from '../components/rssi';
+import Bluetooth from '../components/bluetooth';
 
 export default class ActiveScreen extends React.Component {
   static navigationOptions = {
@@ -19,7 +19,7 @@ export default class ActiveScreen extends React.Component {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ScrollView>
-          <Rssi />
+          <Bluetooth />
         </ScrollView>
       </View>
     );

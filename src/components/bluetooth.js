@@ -11,7 +11,7 @@ import {
 import { BleManager } from 'react-native-ble-plx';
 import KalmanFilter from 'kalmanjs';
 
-export default class Rssi extends Component<Props> {
+export default class Bluetooth extends Component<Props> {
 
   constructor() {
     super();
@@ -19,9 +19,9 @@ export default class Rssi extends Component<Props> {
     this.state = {
     	info: "",
     	values: {},
-    	loading: false,
+    	loading: true,
     	terminal: [],
-    	rssi: [],
+    	rssi: null,
     };
 	  
 	  this.kf = new KalmanFilter();
@@ -57,8 +57,8 @@ export default class Rssi extends Component<Props> {
   }
 
   scanAndConnect() {
-
-  	this.state.terminal.push('scanning...');
+		let concatenatedTerminalArray = this.state.terminal.concat('initializing...');
+		this.setState({ terminal: concatenatedTerminalArray });
 		console.log(this.state.terminal);
 	  this.manager.startDeviceScan(null, null, (error, device) => {
 
@@ -75,8 +75,9 @@ export default class Rssi extends Component<Props> {
 	  			
 	  			let concatenatedTerminalArray= this.state.terminal.concat('peripheral discovered');
 	  			this.setState({ terminal: concatenatedTerminalArray });
-					console.log(this.state.terminal);
 	        this.manager.stopDeviceScan();
+	  			concatenatedTerminalArray= this.state.terminal.concat('connecting...');
+	  			this.setState({ terminal: concatenatedTerminalArray });
 	        
 	        device.connect()
 	          .then((device) => {
@@ -92,18 +93,19 @@ export default class Rssi extends Component<Props> {
             	return this.setupNotifications(device)
 	          })
 	          .then(() => {
-	          	let concatenatedTerminalArray= this.state.terminal.concat('listening...');
+	          	let concatenatedTerminalArray= this.state.terminal.concat('reading rssi...');
 	  					this.setState({ terminal: concatenatedTerminalArray });
 	            console.log(this.state.terminal);
-
+	          	concatenatedTerminalArray= this.state.terminal.concat('filtering rssi...');
+	  					this.setState({ loading: false });
+	  					this.setState({ terminal: concatenatedTerminalArray });
 	            setInterval(() => {
 	          		this.manager.readRSSIForDevice(device.id)
 	          			.then((data) => {
 	          				console.log(data.rssi);
-	          				let concatenatedRSSIArray = this.state.rssi.concat(data.rssi);
-	          				this.setState({ rssi: concatenatedRSSIArray });
+	          				this.setState({ rssi: data.rssi });
 	          			});
-	            }, 2000);
+	            }, 1000);
 	          }, (error) => {
 	            this.error(error.message)
 	          	let concatenatedTerminalArray= this.state.terminal.concat('error'+error.message);
@@ -151,36 +153,31 @@ export default class Rssi extends Component<Props> {
        <View style={styles.terminal}>
         {Object.keys(this.state.terminal).map((key) => {
           return (
-          	 <Text key={key}>
+          	 <Text key={key} style={styles.terminalText}>
                {this.state.terminal[key]}
              </Text>
             );
-        })}
-        {Object.keys(this.state.rssi).map((key) => {
-          return (
-          	 <Text key={key}>
-               {'rssi: '+this.state.rssi[key]+' filtered rssi: '+this.kf.filter(this.state.rssi[key])}
-             </Text>
-            );
-        })}
+        	})
+      	}
+				{this.state.loading ? null : <View><Text style={styles.terminalTextSuccess}>{'RSSI: '+this.state.rssi}</Text><Text style={styles.terminalTextSuccess}>{'Kalman: '+parseFloat(this.kf.filter(this.state.rssi).toFixed(5))}</Text></View> }
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: 'black',
-    width: '100%',
-    padding: 10,
-    paddingTop: 25,
-    alignItems: 'center'
-  },
-  displayText: {
-    color: 'white',
-    fontSize: 24,
-  },
   terminal: {
-  	justifyContent: 'flex-start'
+  	flex: 1,
+  	margin: 10,
+  },
+  terminalText: {
+  	fontFamily: 'Courier',
+  	textAlign: 'left',
+  },
+  terminalTextSuccess: {
+  	fontFamily: 'Courier',
+  	color: 'indianred',
+  	fontWeight: 'bold',
+  	fontSize: 22
   }
 });

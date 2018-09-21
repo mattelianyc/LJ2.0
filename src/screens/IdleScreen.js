@@ -4,6 +4,7 @@ import {
 	Text,
 	Button,
   Image,
+  // StyleSheet,
 } from 'react-native';
 
 export default class IdleScreen extends React.Component {
@@ -25,3 +26,9 @@ export default class IdleScreen extends React.Component {
     );
   }
 }
+
+// const styles = StyleSheet.create({
+//   scanQRButton: {
+//     backgroundColor: 'crimson',
+//   }
+// });

@@ -5,6 +5,7 @@ import {
   Text,
   View,
 } from 'react-native';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
@@ -69,8 +70,8 @@ export default class App extends Component<Props> {
         },
       }),
       tabBarOptions: {
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'lightblue',
+        activeTintColor: 'darkred',
+        inactiveTintColor: 'lightcoral',
       },
     });
 
