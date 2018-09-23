@@ -63,9 +63,6 @@ export default class App extends Component<Props> {
           } else if (routeName === 'Settings') {
             iconName = `${focused ? 'ios-help-circle' : 'ios-help-circle-outline'}`;
           }
-
-          // You can return any component that you like here! We usually use an
-          // icon component from react-native-vector-icons
           return <Ionicons name={iconName} size={25} color={tintColor} />;
         },
       }),

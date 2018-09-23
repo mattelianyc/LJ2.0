@@ -4,8 +4,10 @@ import {
 	Text,
 	Button,
   Image,
-  // StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
+
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default class IdleScreen extends React.Component {
   
@@ -18,10 +20,9 @@ export default class IdleScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Button
-          title="Scan QR Code To Connect"
-          onPress={() => this.props.navigation.navigate('QR')}
-        />
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('QR')}>
+          <Ionicons name={'ios-barcode'} size={169} color={'indianred'} />
+        </TouchableOpacity>
       </View>
     );
   }

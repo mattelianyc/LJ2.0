@@ -25,8 +25,8 @@ export default class Bluetooth extends Component<Props> {
     };
 	  
 	  this.kf = new KalmanFilter();
-
 	  this.manager = new BleManager();
+
     this.prefixUUID = "41E51E25";
     this.suffixUUID = "-81D7-C321-2390-6B4FBDC3EDF6";
     this.sensors = {} 
@@ -62,7 +62,6 @@ export default class Bluetooth extends Component<Props> {
 		console.log(this.state.terminal);
 	  this.manager.startDeviceScan(null, null, (error, device) => {
 
-      setTimeout(() => {
     		if (error) {
 	        this.error(error.message)
 	  			let concatenatedTerminalArray= this.state.terminal.concat('ERR!'+error.message);
@@ -70,9 +69,7 @@ export default class Bluetooth extends Component<Props> {
 					console.log(this.state.terminal);
 	        return
 	      }
-
-	      if (device.id === '41E51E25-81D7-C321-2390-6B4FBDC3EDF6' || device.name === 'Nordic_Prox') {
-	  			
+	      if (device.id === '41E51E25-81D7-C321-2390-6B4FBDC3EDF6' || device.name === 'Nordic_Prox') {	
 	  			let concatenatedTerminalArray= this.state.terminal.concat('peripheral discovered');
 	  			this.setState({ terminal: concatenatedTerminalArray });
 	        this.manager.stopDeviceScan();
@@ -113,7 +110,6 @@ export default class Bluetooth extends Component<Props> {
 	            console.log(this.state.terminal);
 	          })
 	      }	
-      }, 2000);
       
     });
   }
@@ -123,11 +119,9 @@ export default class Bluetooth extends Component<Props> {
       const service = this.serviceUUID(id)
       const characteristicW = this.writeUUID(id)
       const characteristicN = this.notifyUUID(id)
-
       const characteristic = await device.writeCharacteristicWithResponseForService(
         service, characteristicW, "AQ==" /* 0x01 in hex */
       )
-
       device.monitorCharacteristicForService(service, characteristicN, (error, characteristic) => {
         if (error) {
           this.error(error.message)
