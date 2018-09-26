@@ -13,11 +13,6 @@ import Bluetooth from '../components/bluetooth';
 
 export default class HomeScreen extends React.Component {
   
-  constructor() {
-    super();
-    console.log(this.props);  
-  }
-
   static navigationOptions = {
     headerTitle: (
       <Image style={{ width: 300, height: 39 }} source={require('../../assets/images/HeaderLJ.png')}/>

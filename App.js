@@ -12,12 +12,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import HomeScreen from './src/screens/HomeScreen';
 import QRScreen from './src/screens/QRScreen';
 
-
 import SettingsScreen from './src/screens/SettingsScreen';
 import DetailsScreen from './src/screens/DetailsScreen';
-
-import { BleManager } from 'react-native-ble-plx';
-import KalmanFilter from 'kalmanjs';
 
 const instructions = Platform.select({
   ios: 'Click to Scan QR Code',
@@ -29,13 +25,6 @@ const instructions = Platform.select({
 type Props = {};
 
 export default class App extends Component<Props> {
-  
-  constructor() {
-    super();
-  }
-
-  componentWillMount() {}
-  componentDidMount() {}
 
   render() {
     const HomeStack = createStackNavigator({

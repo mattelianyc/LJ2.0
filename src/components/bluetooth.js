@@ -59,47 +59,41 @@ export default class Bluetooth extends Component<Props> {
   scanAndConnect() {
 		let concatenatedTerminalArray = this.state.terminal.concat('initializing...');
 		this.setState({ terminal: concatenatedTerminalArray });
-		console.log(this.state.terminal);
 	  this.manager.startDeviceScan(null, null, (error, device) => {
 
     		if (error) {
 	        this.error(error.message)
 	  			let concatenatedTerminalArray= this.state.terminal.concat('ERR!'+error.message);
 	  			this.setState({ terminal: concatenatedTerminalArray });
-					console.log(this.state.terminal);
 	        return
 	      }
 	      if (device.id === '41E51E25-81D7-C321-2390-6B4FBDC3EDF6' || device.name === 'Nordic_Prox') {	
-	  			let concatenatedTerminalArray= this.state.terminal.concat('peripheral discovered');
+	  			let concatenatedTerminalArray = this.state.terminal.concat('peripheral discovered');
 	  			this.setState({ terminal: concatenatedTerminalArray });
 	        this.manager.stopDeviceScan();
-	  			concatenatedTerminalArray= this.state.terminal.concat('connecting...');
+	  			concatenatedTerminalArray = this.state.terminal.concat('connecting...');
 	  			this.setState({ terminal: concatenatedTerminalArray });
 	        
 	        device.connect()
 	          .then((device) => {
-	          	let concatenatedTerminalArray= this.state.terminal.concat('discovering services and characteristics');
+	          	let concatenatedTerminalArray = this.state.terminal.concat('discovering services and characteristics');
 	  					this.setState({ terminal: concatenatedTerminalArray });
-	            console.log(this.state.terminal);
             	return device.discoverAllServicesAndCharacteristics()
 	          })
 	          .then((device) => {
 	          	let concatenatedTerminalArray= this.state.terminal.concat('setting notifications');
 	  					this.setState({ terminal: concatenatedTerminalArray });
-	            console.log(this.state.terminal);
             	return this.setupNotifications(device)
 	          })
 	          .then(() => {
 	          	let concatenatedTerminalArray= this.state.terminal.concat('reading rssi...');
 	  					this.setState({ terminal: concatenatedTerminalArray });
-	            console.log(this.state.terminal);
-	          	concatenatedTerminalArray= this.state.terminal.concat('filtering rssi...');
+	          	concatenatedTerminalArray = this.state.terminal.concat('filtering rssi...');
 	  					this.setState({ loading: false });
 	  					this.setState({ terminal: concatenatedTerminalArray });
 	            setInterval(() => {
 	          		this.manager.readRSSIForDevice(device.id)
 	          			.then((data) => {
-	          				console.log(data.rssi);
 	          				this.setState({ rssi: data.rssi });
 	          			});
 	            }, 1669);
@@ -107,7 +101,6 @@ export default class Bluetooth extends Component<Props> {
 	            this.error(error.message)
 	          	let concatenatedTerminalArray= this.state.terminal.concat('error'+error.message);
 	  					this.setState({ terminal: concatenatedTerminalArray });
-	            console.log(this.state.terminal);
 	          })
 	      }	
       
