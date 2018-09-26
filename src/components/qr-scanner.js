@@ -25,7 +25,7 @@ export default class QRScanner extends Component<Props> {
 
   onSuccess(e) {
     this.setState({ uuid: e.data });
-    this.props.navigate('Active', { uuid: this.state.uuid });
+    this.props.navigate('Home', { uuid: e.data });
   }
 
   render() {

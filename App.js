@@ -9,9 +9,9 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
-import IdleScreen from './src/screens/IdleScreen';
+import HomeScreen from './src/screens/HomeScreen';
 import QRScreen from './src/screens/QRScreen';
-import ActiveScreen from './src/screens/ActiveScreen';
+
 
 import SettingsScreen from './src/screens/SettingsScreen';
 import DetailsScreen from './src/screens/DetailsScreen';
@@ -39,9 +39,8 @@ export default class App extends Component<Props> {
 
   render() {
     const HomeStack = createStackNavigator({
-      Idle: { screen: IdleScreen },
+      Home: { screen: HomeScreen },
       QR: { screen: QRScreen },
-      Active: { screen: ActiveScreen },
     });
 
     const SettingsStack = createStackNavigator({
