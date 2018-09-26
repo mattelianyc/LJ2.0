@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -15,6 +16,7 @@
 		103A5E2C2151CB59008849C4 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 103A5E292151CB10008849C4 /* libReactNativePermissions.a */; };
 		106D0EBE16F54DA589004507 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A82B9E946ECB4F28A78E9B06 /* SimpleLineIcons.ttf */; };
 		10E6712921333C0D00F01589 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E6712821333C0D00F01589 /* File.swift */; };
+		10F7BFA7215C171A00D94D86 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10F7BF7D215C171A00D94D86 /* GoogleService-Info.plist */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		1347ECDC86D44F819184CFE7 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 940A3909CA894A82BD863FCC /* FontAwesome5_Solid.ttf */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
@@ -375,6 +377,7 @@
 		10A151E62D4740ED893B75D4 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		10E6712721333C0C00F01589 /* LJ-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LJ-Bridging-Header.h"; sourceTree = "<group>"; };
 		10E6712821333C0D00F01589 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		10F7BF7D215C171A00D94D86 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "LJ/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* LJ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LJ.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -601,6 +604,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
+				10F7BF7D215C171A00D94D86 /* GoogleService-Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = LJ;
@@ -1255,6 +1259,7 @@
 				F9A3001A664B4C6991CCF182 /* Foundation.ttf in Resources */,
 				E6FEE84B863F4584B0129E3F /* Ionicons.ttf in Resources */,
 				7C9797329EE146249A4D2B61 /* MaterialCommunityIcons.ttf in Resources */,
+				10F7BFA7215C171A00D94D86 /* GoogleService-Info.plist in Resources */,
 				A0A4F41C2AB14D3CB328B33B /* MaterialIcons.ttf in Resources */,
 				39AD9806F6E347F5872DACDD /* Octicons.ttf in Resources */,
 				106D0EBE16F54DA589004507 /* SimpleLineIcons.ttf in Resources */,
