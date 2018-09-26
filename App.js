@@ -15,6 +15,8 @@ import QRScreen from './src/screens/QRScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import DetailsScreen from './src/screens/DetailsScreen';
 
+import firebase from 'react-native-firebase';
+
 const instructions = Platform.select({
   ios: 'Click to Scan QR Code',
   android:
@@ -25,6 +27,11 @@ const instructions = Platform.select({
 type Props = {};
 
 export default class App extends Component<Props> {
+
+  constructor() {
+    super();
+    console.log(firebase);
+  }
 
   render() {
     const HomeStack = createStackNavigator({
