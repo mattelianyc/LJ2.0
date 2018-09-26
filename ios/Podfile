@@ -7,6 +7,7 @@ target 'LJ' do
 
   # Pods for LJ
   pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
 
   #target 'LJ-tvOSTests' do
   #  inherit! :search_paths
