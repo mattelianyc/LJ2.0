@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
+  PushNotificationIOS,
 } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -30,6 +31,8 @@ export default class App extends Component<Props> {
 
   constructor() {
     super();
+
+    PushNotificationIOS.requestPermissions();
     firebase.messaging().getToken()
       .then(fcmToken => {
         if (fcmToken) {

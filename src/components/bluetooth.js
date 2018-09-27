@@ -5,7 +5,8 @@ import {
   Text,
   View,
   Alert,
-  Platform
+  Platform,
+  PushNotificationIOS,
 } from 'react-native';
 
 import { BleManager } from 'react-native-ble-plx';
@@ -22,6 +23,11 @@ export default class Bluetooth extends Component<Props> {
     	loading: true,
     	terminal: [],
     	rssi: null,
+      details: {
+        alertBody: "You're getting LighterJack'd, biatch !!!!",
+        alertAction: 'open app',
+        'content-available': 1,
+      }
     };
 	  
 	  this.kf = new KalmanFilter();
@@ -95,6 +101,9 @@ export default class Bluetooth extends Component<Props> {
 	          		this.manager.readRSSIForDevice(device.id)
 	          			.then((data) => {
 	          				this.setState({ rssi: data.rssi });
+                    if( data.rssi < -90 ) {
+                      PushNotificationIOS.presentLocalNotification(this.state.details);
+                    }
 	          			});
 	            }, 1669);
 	          }, (error) => {
