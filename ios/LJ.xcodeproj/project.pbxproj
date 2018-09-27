@@ -14,6 +14,7 @@
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* LJTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* LJTests.m */; };
 		103A5E2C2151CB59008849C4 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 103A5E292151CB10008849C4 /* libReactNativePermissions.a */; };
+		10500CEC215D382800C742E0 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10500CCC215D37EF00C742E0 /* libRCTPushNotification.a */; };
 		106D0EBE16F54DA589004507 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A82B9E946ECB4F28A78E9B06 /* SimpleLineIcons.ttf */; };
 		10E6712921333C0D00F01589 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E6712821333C0D00F01589 /* File.swift */; };
 		10F7BFA7215C171A00D94D86 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10F7BF7D215C171A00D94D86 /* GoogleService-Info.plist */; };
@@ -120,6 +121,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 9D23B34F1C767B80008B4819;
 			remoteInfo = ReactNativePermissions;
+		};
+		10500CCB215D37EF00C742E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 10500CB9215D37EF00C742E0 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTPushNotification;
+		};
+		10500CCD215D37EF00C742E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 10500CB9215D37EF00C742E0 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D05745F1DE6004600184BB4;
+			remoteInfo = "RCTPushNotification-tvOS";
 		};
 		1060A24F215C2D9A00F292B9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -386,6 +401,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* LJTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LJTests.m; sourceTree = "<group>"; };
 		103A5DFE2151CB0F008849C4 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
+		10500CB9215D37EF00C742E0 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		10A151E62D4740ED893B75D4 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		10D5F062215C3E1200542C7A /* LJ.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LJ.entitlements; path = LJ/LJ.entitlements; sourceTree = "<group>"; };
 		10E6712721333C0C00F01589 /* LJ-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LJ-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -453,6 +469,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10500CEC215D382800C742E0 /* libRCTPushNotification.a in Frameworks */,
 				103A5E2C2151CB59008849C4 /* libReactNativePermissions.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -573,6 +590,15 @@
 			isa = PBXGroup;
 			children = (
 				103A5E292151CB10008849C4 /* libReactNativePermissions.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		10500CBA215D37EF00C742E0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				10500CCC215D37EF00C742E0 /* libRCTPushNotification.a */,
+				10500CCE215D37EF00C742E0 /* libRCTPushNotification-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -723,6 +749,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				10500CB9215D37EF00C742E0 /* RCTPushNotification.xcodeproj */,
 				103A5DFE2151CB0F008849C4 /* ReactNativePermissions.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -900,6 +927,7 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 8S73A2WFKN;
 						LastSwiftMigration = 940;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -963,6 +991,10 @@
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
+				},
+				{
+					ProductGroup = 10500CBA215D37EF00C742E0 /* Products */;
+					ProjectRef = 10500CB9215D37EF00C742E0 /* RCTPushNotification.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -1059,6 +1091,20 @@
 			fileType = archive.ar;
 			path = libReactNativePermissions.a;
 			remoteRef = 103A5E282151CB10008849C4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		10500CCC215D37EF00C742E0 /* libRCTPushNotification.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTPushNotification.a;
+			remoteRef = 10500CCB215D37EF00C742E0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		10500CCE215D37EF00C742E0 /* libRCTPushNotification-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTPushNotification-tvOS.a";
+			remoteRef = 10500CCD215D37EF00C742E0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		1060A250215C2D9A00F292B9 /* libRNFirebase.a */ = {
@@ -1605,6 +1651,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LJ/LJ.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 8S73A2WFKN;
@@ -1622,7 +1670,9 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = me.lighterjack;
 				PRODUCT_NAME = LJ;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "LJ-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -1638,6 +1688,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LJ/LJ.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8S73A2WFKN;
 				HEADER_SEARCH_PATHS = (
@@ -1654,7 +1706,9 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = me.lighterjack;
 				PRODUCT_NAME = LJ;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "LJ-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
