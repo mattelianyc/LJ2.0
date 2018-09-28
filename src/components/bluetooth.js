@@ -24,7 +24,7 @@ export default class Bluetooth extends Component<Props> {
     	terminal: [],
     	rssi: null,
       details: {
-        alertBody: "You're getting LighterJack'd, biatch !!!!",
+        alertBody: "Get your lighter back.",
         alertAction: 'open app',
         'content-available': 1,
       }
@@ -35,7 +35,9 @@ export default class Bluetooth extends Component<Props> {
 
     this.prefixUUID = "41E51E25";
     this.suffixUUID = "-81D7-C321-2390-6B4FBDC3EDF6";
-    this.sensors = {} 
+    this.sensors = {
+      // add sensors here
+    } 
   }
   
   serviceUUID(num) {

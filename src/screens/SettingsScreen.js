@@ -4,6 +4,7 @@ import {
 	Text,
   Button,
 	Image,
+  Slider,
 } from 'react-native';
 
 export default class SettingsScreen extends React.Component {
@@ -17,6 +18,16 @@ export default class SettingsScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>
+          Noise Filter: 
+        </Text>
+        <Slider style={{ width: 300, color: 'black' }} />
+
+        <Text>
+          TX Level: 
+        </Text>
+        <Slider style={{ width: 300, color: 'black' }} />
+
         <Button
           title="Go to Details"
           onPress={() => this.props.navigation.navigate('Details')}
