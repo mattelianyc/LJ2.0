@@ -60,6 +60,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 // Required for the localNotification event.
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
+  NSLog(@"Notification Body %@", notification);
   [RCTPushNotificationManager didReceiveLocalNotification:notification];
 }
 

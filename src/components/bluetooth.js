@@ -12,6 +12,8 @@ import {
 import { BleManager } from 'react-native-ble-plx';
 import KalmanFilter from 'kalmanjs';
 
+import NotifService from '../services/NotifService';
+
 export default class Bluetooth extends Component<Props> {
 
   constructor() {
@@ -23,15 +25,13 @@ export default class Bluetooth extends Component<Props> {
     	loading: true,
     	terminal: [],
     	rssi: null,
-      details: {
-        alertBody: "Get your lighter back.",
-        alertAction: 'open app',
-        'content-available': 1,
-      }
+      alert: false,
     };
-	  
-	  this.kf = new KalmanFilter();
-	  this.manager = new BleManager();
+    
+    this.kf = new KalmanFilter();
+    this.manager = new BleManager();
+    this.notif = new NotifService();
+    this.notif.configure();
 
     this.prefixUUID = "41E51E25";
     this.suffixUUID = "-81D7-C321-2390-6B4FBDC3EDF6";
@@ -75,7 +75,7 @@ export default class Bluetooth extends Component<Props> {
 	  			this.setState({ terminal: concatenatedTerminalArray });
 	        return
 	      }
-	      if (device.id === '41E51E25-81D7-C321-2390-6B4FBDC3EDF6' || device.name === 'Nordic_Prox') {	
+	      if (device.id === '28C6CF39-F17B-4822-69A6-4FE9E54D1D92' || device.name === 'Nordic_Prox') {	
 	  			let concatenatedTerminalArray = this.state.terminal.concat('peripheral discovered');
 	  			this.setState({ terminal: concatenatedTerminalArray });
 	        this.manager.stopDeviceScan();
@@ -84,11 +84,13 @@ export default class Bluetooth extends Component<Props> {
 	        
 	        device.connect()
 	          .then((device) => {
-	          	let concatenatedTerminalArray = this.state.terminal.concat('discovering services and characteristics');
-	  					this.setState({ terminal: concatenatedTerminalArray });
-            	return device.discoverAllServicesAndCharacteristics()
-	          })
-	          .then((device) => {
+              console.log(device);
+              let concatenatedTerminalArray = this.state.terminal.concat('discovering services and characteristics');
+              this.setState({ terminal: concatenatedTerminalArray });
+              return device.discoverAllServicesAndCharacteristics()
+            })
+            .then((device) => {
+              console.log(device);
 	          	let concatenatedTerminalArray= this.state.terminal.concat('setting notifications');
 	  					this.setState({ terminal: concatenatedTerminalArray });
             	return this.setupNotifications(device)
@@ -102,9 +104,12 @@ export default class Bluetooth extends Component<Props> {
 	            setInterval(() => {
 	          		this.manager.readRSSIForDevice(device.id)
 	          			.then((data) => {
-	          				this.setState({ rssi: data.rssi });
-                    if( data.rssi < -90 ) {
-                      PushNotificationIOS.presentLocalNotification(this.state.details);
+	          				this.setState({ 
+                      rssi: data.rssi,
+                      alert: false, 
+                    });
+                    if( this.kf.filter(data.rssi) < -90 ) {
+                      this.setState({ alert: true });
                     }
 	          			});
 	            }, 1669);
@@ -116,6 +121,13 @@ export default class Bluetooth extends Component<Props> {
 	      }	
       
     });
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(prevState.rssi >= -90 && this.state.rssi < -90) {
+      console.log('bitch');
+      this.notif.localNotif();
+    }
   }
 
   async setupNotifications(device) {
