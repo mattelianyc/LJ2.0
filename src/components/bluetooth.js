@@ -28,7 +28,7 @@ export default class Bluetooth extends Component<Props> {
       alert: false,
     };
     
-    this.kf = new KalmanFilter();
+    this.kf = new KalmanFilter({ R: 0.01, Q: 1.0 });
     this.manager = new BleManager();
     this.notif = new NotificationService();
     this.notif.configure();
@@ -104,13 +104,16 @@ export default class Bluetooth extends Component<Props> {
 	            setInterval(() => {
 	          		this.manager.readRSSIForDevice(device.id)
 	          			.then((data) => {
+
 	          				this.setState({ 
-                      rssi: data.rssi,
+                      rssi: parseFloat(this.kf.filter(data.rssi).toFixed(5)),
                       alert: false, 
                     });
-                    if( this.kf.filter(data.rssi) < -90 ) {
+                    
+                    if( this.kf.filter(data.rssi) < -88 ) {
                       this.setState({ alert: true });
                     }
+
 	          			});
 	            }, 1669);
 	          }, (error) => {
@@ -124,8 +127,9 @@ export default class Bluetooth extends Component<Props> {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(prevState.rssi >= -90 && this.state.rssi < -90) {
-      console.log('bitch');
+    console.log(this.state.alert);
+    if(prevState.rssi >= -88 && this.state.rssi < -88) {
+      console.log(this.state.alert);
       this.notif.localNotif();
     }
   }
@@ -169,7 +173,7 @@ export default class Bluetooth extends Component<Props> {
             );
         	})
       	}
-				{this.state.loading ? null : <Text style={styles.terminalTextSuccess}>{'R: '+this.state.rssi+'   K: '+parseFloat(this.kf.filter(this.state.rssi).toFixed(5))}</Text> }
+				{this.state.loading ? null : <Text style={styles.terminalTextSuccess}>{this.state.rssi}</Text> }
       </View>
     );
   }
