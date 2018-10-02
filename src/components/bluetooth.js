@@ -12,7 +12,7 @@ import {
 import { BleManager } from 'react-native-ble-plx';
 import KalmanFilter from 'kalmanjs';
 
-import NotifService from '../services/NotifService';
+import NotificationService from '../services/NotificationService';
 
 export default class Bluetooth extends Component<Props> {
 
@@ -30,7 +30,7 @@ export default class Bluetooth extends Component<Props> {
     
     this.kf = new KalmanFilter();
     this.manager = new BleManager();
-    this.notif = new NotifService();
+    this.notif = new NotificationService();
     this.notif.configure();
 
     this.prefixUUID = "41E51E25";

@@ -1,6 +1,6 @@
 import PushNotification from 'react-native-push-notification';
 
-export default class NotifService {
+export default class NotificationService {
 
   constructor(onRegister, onNotification) {
     this.configure(onRegister, onNotification);
@@ -52,6 +52,7 @@ export default class NotifService {
       soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
       number: 1, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
       actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
+      contentAvailable: 1,
     });
 
     this.lastId++;
