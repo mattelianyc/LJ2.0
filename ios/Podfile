@@ -8,11 +8,14 @@ target 'LJ' do
   # Pods for LJ
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
-
+  pod 'CocoaLumberjack'
+  
   #target 'LJ-tvOSTests' do
   #  inherit! :search_paths
    # Pods for testing
   #end
+
+  pod 'RNBackgroundGeolocation', :path => '../node_modules/react-native-background-geolocation'
 
   target 'LJTests' do
     inherit! :search_paths

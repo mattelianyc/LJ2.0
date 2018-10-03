@@ -13,6 +13,7 @@ import { BleManager } from 'react-native-ble-plx';
 import KalmanFilter from 'kalmanjs';
 
 import NotificationService from '../services/NotificationService';
+import BackgroundService from '../services/BackgroundService';
 
 export default class Bluetooth extends Component<Props> {
 
@@ -31,7 +32,11 @@ export default class Bluetooth extends Component<Props> {
     this.kf = new KalmanFilter({ R: 0.01, Q: 1.0 });
     this.manager = new BleManager();
     this.notif = new NotificationService();
+    this.bg = new BackgroundService();
+    this.bg.ready();
+    console.log(this.bg);
     this.notif.configure();
+
 
     this.prefixUUID = "41E51E25";
     this.suffixUUID = "-81D7-C321-2390-6B4FBDC3EDF6";
@@ -101,6 +106,7 @@ export default class Bluetooth extends Component<Props> {
 	          	concatenatedTerminalArray = this.state.terminal.concat('filtering rssi...');
 	  					this.setState({ loading: false });
 	  					this.setState({ terminal: concatenatedTerminalArray });
+              this.bg.start();
 	            setInterval(() => {
 	          		this.manager.readRSSIForDevice(device.id)
 	          			.then((data) => {
