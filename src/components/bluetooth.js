@@ -6,6 +6,7 @@ import {
   View,
   Alert,
   Platform,
+  Vibration,
   PushNotificationIOS,
   NativeAppEventEmitter,
 } from 'react-native';
@@ -29,6 +30,9 @@ export default class Bluetooth extends Component<Props> {
     	rssi: null,
       alert: false,
     };
+
+    this.duration = 10000;
+    this.pattern = [1000, 2000, 3000];
     
     this.kf = new KalmanFilter({ R: 0.01, Q: 1.0 });
     this.manager = new BleManager();
@@ -66,7 +70,7 @@ export default class Bluetooth extends Component<Props> {
   }
 
   scanAndConnect() {
-		let concatenatedTerminalArray = this.state.terminal.concat('initializing...');
+		let concatenatedTerminalArray = this.state.terminal.concat('initializing');
 		this.setState({ terminal: concatenatedTerminalArray });
 	  this.manager.startDeviceScan(null, null, (error, device) => {
 
@@ -81,7 +85,7 @@ export default class Bluetooth extends Component<Props> {
 	  			let concatenatedTerminalArray = this.state.terminal.concat('peripheral discovered');
 	  			this.setState({ terminal: concatenatedTerminalArray });
 	        this.manager.stopDeviceScan();
-	  			concatenatedTerminalArray = this.state.terminal.concat('connecting...');
+	  			concatenatedTerminalArray = this.state.terminal.concat('connecting');
 	  			this.setState({ terminal: concatenatedTerminalArray });
 	        
 	        device.connect()
@@ -98,7 +102,7 @@ export default class Bluetooth extends Component<Props> {
             	return this.setupNotifications(device)
 	          })
 	          .then(() => {
-	          	let concatenatedTerminalArray= this.state.terminal.concat('reading rssi...');
+	          	let concatenatedTerminalArray= this.state.terminal.concat('reading rssi');
 	  					this.setState({ terminal: concatenatedTerminalArray });
 	          	concatenatedTerminalArray = this.state.terminal.concat('filtering rssi...');
 	  					this.setState({ loading: false });
@@ -116,9 +120,10 @@ export default class Bluetooth extends Component<Props> {
                       rssi: parseFloat(this.kf.filter(data.rssi).toFixed(5)),
                       alert: false, 
                     });
-                    
-                    if( this.kf.filter(data.rssi) < -92 ) {
+
+                    if( this.kf.filter(data.rssi) < -91 ) {
                       this.setState({ alert: true });
+                      Vibration.vibrate(this.duration);
                     }
 
 	          			});
@@ -135,7 +140,7 @@ export default class Bluetooth extends Component<Props> {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log(this.state.alert);
-    if(prevState.rssi >= -92 && this.state.rssi < -92) {
+    if(prevState.rssi >= -91 && this.state.rssi < -91) {
       console.log(this.state.alert);
       this.notif.localNotif();
     }
