@@ -117,7 +117,7 @@ export default class Bluetooth extends Component<Props> {
                       alert: false, 
                     });
                     
-                    if( this.kf.filter(data.rssi) < -88 ) {
+                    if( this.kf.filter(data.rssi) < -92 ) {
                       this.setState({ alert: true });
                     }
 
@@ -135,7 +135,7 @@ export default class Bluetooth extends Component<Props> {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log(this.state.alert);
-    if(prevState.rssi >= -88 && this.state.rssi < -88) {
+    if(prevState.rssi >= -92 && this.state.rssi < -92) {
       console.log(this.state.alert);
       this.notif.localNotif();
     }
@@ -190,6 +190,7 @@ const styles = StyleSheet.create({
   terminal: {
   	flex: 1,
   	margin: 10,
+    width: 300,
   },
   terminalText: {
   	fontFamily: 'Courier',

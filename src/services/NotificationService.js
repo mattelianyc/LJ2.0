@@ -52,7 +52,7 @@ export default class NotificationService {
       soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
       number: 1, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
       actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-      contentAvailable: 1,
+      "content-available": 1,
     });
 
     this.lastId++;
