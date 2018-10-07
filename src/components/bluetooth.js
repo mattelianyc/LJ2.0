@@ -7,12 +7,14 @@ import {
   Alert,
   Platform,
   PushNotificationIOS,
+  NativeAppEventEmitter,
 } from 'react-native';
 
 import { BleManager } from 'react-native-ble-plx';
 import KalmanFilter from 'kalmanjs';
 
 import NotificationService from '../services/NotificationService';
+import BackgroundTimer from 'react-native-background-timer';
 
 export default class Bluetooth extends Component<Props> {
 
@@ -32,7 +34,6 @@ export default class Bluetooth extends Component<Props> {
     this.manager = new BleManager();
     this.notif = new NotificationService();
     this.notif.configure();
-
     this.prefixUUID = "41E51E25";
     this.suffixUUID = "-81D7-C321-2390-6B4FBDC3EDF6";
     this.sensors = {
@@ -75,7 +76,8 @@ export default class Bluetooth extends Component<Props> {
 	  			this.setState({ terminal: concatenatedTerminalArray });
 	        return
 	      }
-	      if (device.id === '28C6CF39-F17B-4822-69A6-4FE9E54D1D92' || device.name === 'Nordic_Prox') {	
+        // if (device.id === '28C6CF39-F17B-4822-69A6-4FE9E54D1D92' || device.name === 'Magic_Mushr') {  
+	      if (device.id === '41E51E25-81D7-C321-2390-6B4FBDC3EDF6' || device.name === 'Magic_Mushr') {	
 	  			let concatenatedTerminalArray = this.state.terminal.concat('peripheral discovered');
 	  			this.setState({ terminal: concatenatedTerminalArray });
 	        this.manager.stopDeviceScan();
@@ -101,7 +103,12 @@ export default class Bluetooth extends Component<Props> {
 	          	concatenatedTerminalArray = this.state.terminal.concat('filtering rssi...');
 	  					this.setState({ loading: false });
 	  					this.setState({ terminal: concatenatedTerminalArray });
-	            setInterval(() => {
+
+              this.manager.monitorCharacteristicForDevice(device.id, '1803', '2A06', function (data) {
+                console.log(data);
+              });
+
+              BackgroundTimer.runBackgroundTimer(() => { 
 	          		this.manager.readRSSIForDevice(device.id)
 	          			.then((data) => {
 
@@ -115,7 +122,7 @@ export default class Bluetooth extends Component<Props> {
                     }
 
 	          			});
-	            }, 1669);
+              }, 1500);
 	          }, (error) => {
 	            this.error(error.message)
 	          	let concatenatedTerminalArray= this.state.terminal.concat('error'+error.message);

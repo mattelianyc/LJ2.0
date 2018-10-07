@@ -14,6 +14,8 @@ target 'LJ' do
    # Pods for testing
   #end
 
+  pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
+
   target 'LJTests' do
     inherit! :search_paths
     # Pods for testing

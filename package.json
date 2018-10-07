@@ -11,6 +11,7 @@
     "kalmanjs": "^1.0.0-beta",
     "react": "16.4.1",
     "react-native": "0.56.0",
+    "react-native-background-timer": "^2.0.1",
     "react-native-ble-plx": "^0.10.0",
     "react-native-camera": "^1.2.0",
     "react-native-firebase": "^5.0.0",
