@@ -3,7 +3,7 @@
 
 target 'LJ' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
+  # use_frameworks!
 
   # Pods for LJ
   pod 'Firebase/Core'
@@ -13,8 +13,6 @@ target 'LJ' do
   #  inherit! :search_paths
    # Pods for testing
   #end
-
-  pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
 
   target 'LJTests' do
     inherit! :search_paths

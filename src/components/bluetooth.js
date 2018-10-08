@@ -108,9 +108,9 @@ export default class Bluetooth extends Component<Props> {
 	  					this.setState({ loading: false });
 	  					this.setState({ terminal: concatenatedTerminalArray });
 
-              this.manager.monitorCharacteristicForDevice(device.id, '1803', '2A06', function (data) {
-                console.log(data);
-              });
+              // this.manager.monitorCharacteristicForDevice(device.id, '1803', '2A06', function (data) {
+              //   console.log(data);
+              // });
 
               BackgroundTimer.runBackgroundTimer(() => { 
 	          		this.manager.readRSSIForDevice(device.id)
