@@ -36,13 +36,16 @@ export default class Bluetooth extends Component<Props> {
     
     this.kf = new KalmanFilter({ R: 0.01, Q: 1.0 });
     this.manager = new BleManager();
-    this.notif = new NotificationService();
-    this.notif.configure();
     this.prefixUUID = "41E51E25";
     this.suffixUUID = "-81D7-C321-2390-6B4FBDC3EDF6";
-    this.sensors = {
-      // add sensors here
-    } 
+    // this.sensors = {
+    //   0: "Temperature",
+    //   1: "Accelerometer",
+    //   2: "Humidity",
+    //   3: "Magnetometer",
+    //   4: "Barometer",
+    //   5: "Gyroscope"
+    // }
   }
   
   serviceUUID(num) {
@@ -89,19 +92,23 @@ export default class Bluetooth extends Component<Props> {
 	  			this.setState({ terminal: concatenatedTerminalArray });
 	        
 	        device.connect()
-	          .then((device) => {
-              console.log(device);
+	          .then((device) => {  
+              device.onDisconnected(function (error, disconnectedDevice) {
+                this.notif = new NotificationService();
+                this.notif.localNotif();
+                console.log(error);
+                console.log(disconnectedDevice.name);
+              });
               let concatenatedTerminalArray = this.state.terminal.concat('discovering services and characteristics');
               this.setState({ terminal: concatenatedTerminalArray });
               return device.discoverAllServicesAndCharacteristics()
             })
             .then((device) => {
-              console.log(device);
-	          	let concatenatedTerminalArray= this.state.terminal.concat('setting notifications');
-	  					this.setState({ terminal: concatenatedTerminalArray });
-            	return this.setupNotifications(device)
-	          })
-	          .then(() => {
+              let concatenatedTerminalArray = this.state.terminal.concat('setting notifications');
+              this.setState({ terminal: concatenatedTerminalArray });
+              return this.setupNotifications(device)
+            })
+            .then(() => {
 	          	let concatenatedTerminalArray= this.state.terminal.concat('reading rssi');
 	  					this.setState({ terminal: concatenatedTerminalArray });
 	          	concatenatedTerminalArray = this.state.terminal.concat('filtering rssi...');
@@ -121,7 +128,7 @@ export default class Bluetooth extends Component<Props> {
                       alert: false, 
                     });
 
-                    if( this.kf.filter(data.rssi) < -91 ) {
+                    if( this.kf.filter(data.rssi) < -94 ) {
                       this.setState({ alert: true });
                       Vibration.vibrate(this.duration);
                     }
@@ -140,13 +147,15 @@ export default class Bluetooth extends Component<Props> {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log(this.state.alert);
-    if(prevState.rssi >= -91 && this.state.rssi < -91) {
+    if(prevState.rssi >= -94 && this.state.rssi < -94) {
       console.log(this.state.alert);
+      this.notif = new NotificationService();
       this.notif.localNotif();
     }
   }
 
   async setupNotifications(device) {
+
     for (const id in this.sensors) {
       const service = this.serviceUUID(id)
       const characteristicW = this.writeUUID(id)
@@ -155,6 +164,7 @@ export default class Bluetooth extends Component<Props> {
         service, characteristicW, "AQ==" /* 0x01 in hex */
       )
       device.monitorCharacteristicForService(service, characteristicN, (error, characteristic) => {
+        console.log(characteristic);
         if (error) {
           this.error(error.message)
           return
