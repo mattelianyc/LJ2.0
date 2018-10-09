@@ -5,6 +5,7 @@ import {
   Text,
   View,
   Button,
+  AsyncStorage,
 } from 'react-native';
 
 import RNCamera from 'react-native-camera';
@@ -24,6 +25,7 @@ export default class QRScanner extends Component<Props> {
   }
 
   onSuccess(e) {
+    AsyncStorage.setItem('device_uuid', e.data);
     this.setState({ uuid: e.data });
     this.props.navigate('Home', { uuid: e.data });
   }
