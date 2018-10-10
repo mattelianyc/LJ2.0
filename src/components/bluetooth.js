@@ -22,7 +22,6 @@ export default class Bluetooth extends Component<Props> {
 
   constructor() {
     super();
-
     this.state = {
     	info: "",
     	values: {},
@@ -31,10 +30,10 @@ export default class Bluetooth extends Component<Props> {
     	rssi: null,
       alert: false,
     };
-
+    // VIBRATION
     this.duration = 10000;
     this.pattern = [1000, 2000, 3000];
-
+    // BLUETOOTH
     this.kf = new KalmanFilter({ R: 0.01, Q: 1.0 });
     this.manager = new BleManager();
   }
@@ -51,25 +50,22 @@ export default class Bluetooth extends Component<Props> {
 
   componentDidMount() {
     // do shit.
-    // AsyncStorage.getKey('')
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(this.state.alert);
     if(prevState.rssi >= -94 && this.state.rssi < -94) {
-      console.log(this.state.alert);
       this.notif = new NotificationService();
       this.notif.localNotif();
     }
   }
 
-  // SCAN
   connectToPeripheral() {
+    // GET 
     this._getStorageValue().then((data) => {
       
       let device_uuid = data;
-      console.log(device_uuid);
 
+      // STATUS BOX
       let concatenatedTerminalArray = this.state.terminal.concat('initializing');
       this.setState({ terminal: concatenatedTerminalArray });
       concatenatedTerminalArray = this.state.terminal.concat('peripheral discovered');
@@ -81,13 +77,12 @@ export default class Bluetooth extends Component<Props> {
       this.manager.connectToDevice(device_uuid)
         .then((device) => {  
 
-          device.onDisconnected(function (error, disconnectedDevice) {
+          device.onDisconnected((error, disconnectedDevice) => {
             this.notif = new NotificationService();
             this.notif.localNotif();
-            console.log(error);
-            console.log(disconnectedDevice.name);
           });
 
+          // STATUS BOX
           concatenatedTerminalArray = this.state.terminal.concat('discovering services and characteristics');
           this.setState({ terminal: concatenatedTerminalArray });
           concatenatedTerminalArray = this.state.terminal.concat('setting notifications');
@@ -95,34 +90,33 @@ export default class Bluetooth extends Component<Props> {
         	concatenatedTerminalArray= this.state.terminal.concat('reading rssi');
   				this.setState({ terminal: concatenatedTerminalArray });
         	concatenatedTerminalArray = this.state.terminal.concat('filtering rssi...');
-  				this.setState({ loading: false });
-  				this.setState({ terminal: concatenatedTerminalArray });
+          this.setState({ terminal: concatenatedTerminalArray });
 
+          this.setState({ loading: false });
+
+          // BG RSSI THREAD
           BackgroundTimer.runBackgroundTimer(() => { 
         		this.manager.readRSSIForDevice(device.id)
         			.then((data) => {
-
         				this.setState({ 
                   rssi: parseFloat(this.kf.filter(data.rssi).toFixed(5)),
                   alert: false, 
                 });
-
                 if( this.kf.filter(data.rssi) < -94 ) {
                   this.setState({ alert: true });
                   Vibration.vibrate(this.duration);
                 }
-
         			});
           }, 1500);
 
         });
-      return;
+        
     });
   }	
 
   async _getStorageValue() {
     var value = await AsyncStorage.getItem('device_uuid');
-    return value
+    return value;
   }
 
   render() {

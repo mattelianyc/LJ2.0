@@ -31,7 +31,6 @@ export default class HomeScreen extends React.Component {
   _getUUID() {
     AsyncStorage.getItem('device_uuid')
       .then((data) => {
-        console.log(data);
         if(data) {
           this.setState({has_uuid: true});
         } else {
@@ -41,7 +40,6 @@ export default class HomeScreen extends React.Component {
   }
 
   render() {
-
     
     if(this.state.has_uuid || this.props.navigation.state.params) {
       return (
