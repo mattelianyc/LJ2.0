@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  AsyncStorage,
 } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -19,10 +20,30 @@ export default class HomeScreen extends React.Component {
     )
   };
 
-  render() {
-    const device_uuid = this.props.navigation.state.params;
+  constructor() {
+    super();
+    this.state = {
+      has_uuid: false
+    }
+    this._getUUID();
+  }
 
-    if(device_uuid) {
+  _getUUID() {
+    AsyncStorage.getItem('device_uuid')
+      .then((data) => {
+        console.log(data);
+        if(data) {
+          this.setState({has_uuid: true});
+        } else {
+          this.setState({has_uuid: false});
+        }
+      });
+  }
+
+  render() {
+
+    
+    if(this.state.has_uuid || this.props.navigation.state.params) {
       return (
         <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Bluetooth />

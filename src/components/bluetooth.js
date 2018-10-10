@@ -37,13 +37,9 @@ export default class Bluetooth extends Component<Props> {
 
     this.kf = new KalmanFilter({ R: 0.01, Q: 1.0 });
     this.manager = new BleManager();
-    
-
   }
 
   componentWillMount() {
-    
-
     if (Platform.OS === 'ios') {
       this.manager.onStateChange((state) => {
         if (state === 'PoweredOn') this.connectToPeripheral();
