@@ -11,26 +11,33 @@ export default class Leash extends React.Component {
 
   constructor() {
     super();
-    console.log('tittymeat');
+    this.state = {
+      rssi_threshold: 
+    }
   }
 
   _getRSSIThreshold() {
     console.log('get');
-    AsyncStorage.getItem('device_uuid')
+    AsyncStorage.getItem('rssi_threshold')
       .then((data) => {
-        console.log(data);
+        console.log('get: '+data);
+        if(data) {
+          this.setState({rssi_threshold: data});
+        } else {
+          return
+        }
       });
   }
   
   _setRSSIThreshold(e) {
-    console.log(e);
+    console.log('set: '+e);
     AsyncStorage.setItem('rssi_threshold', ''+e+'');
   }
 
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Leash: </Text>
+        <Text>Leash: {this.state.rssi_threshold}</Text>
         <Slider 
           value={this._getRSSIThreshold} 
           stepValue={1} 

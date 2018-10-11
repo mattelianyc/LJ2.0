@@ -110,7 +110,7 @@ export default class Bluetooth extends Component<Props> {
                   rssi: parseFloat(this.kf.filter(data.rssi).toFixed(5)),
                   alert: false, 
                 });
-                if( this.kf.filter(data.rssi) < -94 ) {
+                if( this.kf.filter(data.rssi) < this.state.rssi_threshold ) {
                   this.setState({ alert: true });
                   Vibration.vibrate(this.duration);
                 }

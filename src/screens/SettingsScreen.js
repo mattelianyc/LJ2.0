@@ -17,10 +17,21 @@ export default class SettingsScreen extends React.Component {
     )
   };
 
+  constructor() {
+    super()
+  }
+
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        
+        // RSSI THRESHOLD ADJUSTER
         <Leash />
+        // DISCONNECT / FLUSH ASYNC
+        <Disconnect navigate={ navigate } />
+
+        // GO2DETAILS *UNUSED*
         <Button
           title="Go to Details"
           onPress={() => this.props.navigation.navigate('Details')}
