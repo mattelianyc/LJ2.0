@@ -7,6 +7,8 @@ import {
   Slider,
 } from 'react-native';
 
+import Leash from '../components/leash';
+
 export default class SettingsScreen extends React.Component {
 
   static navigationOptions = {
@@ -18,16 +20,7 @@ export default class SettingsScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>
-          Noise Filter: 
-        </Text>
-        <Slider style={{ width: 300, color: 'black' }} />
-
-        <Text>
-          TX Level: 
-        </Text>
-        <Slider style={{ width: 300, color: 'black' }} />
-
+        <Leash />
         <Button
           title="Go to Details"
           onPress={() => this.props.navigation.navigate('Details')}

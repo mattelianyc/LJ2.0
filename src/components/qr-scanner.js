@@ -17,7 +17,6 @@ export default class QRScanner extends Component<Props> {
 
   constructor() {
     super();
-
   }
 
   componentWillMount() {

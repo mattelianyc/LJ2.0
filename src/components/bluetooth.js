@@ -28,6 +28,7 @@ export default class Bluetooth extends Component<Props> {
     	loading: true,
     	terminal: [],
     	rssi: null,
+      rssi_threshold: null,
       alert: false,
     };
     // VIBRATION
@@ -49,19 +50,26 @@ export default class Bluetooth extends Component<Props> {
   }
 
   componentDidMount() {
-    // do shit.
+    this._getRSSIThreshold().then((data) => {
+      console.log(data);
+      if (data) {
+        this.setState({ rssi_threshold: data });
+      } else {
+        this.setState({ rssi_threshold: -94 });
+      }
+    });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(prevState.rssi >= -94 && this.state.rssi < -94) {
+    if(prevState.rssi >= this.state.rssi_threshold && this.state.rssi < this.state.rssi_threshold) {
       this.notif = new NotificationService();
       this.notif.localNotif();
     }
   }
 
   connectToPeripheral() {
-    // GET 
-    this._getStorageValue().then((data) => {
+    // GET UUID
+    this._getUUID().then((data) => {
       
       let device_uuid = data;
 
@@ -114,8 +122,13 @@ export default class Bluetooth extends Component<Props> {
     });
   }	
 
-  async _getStorageValue() {
-    var value = await AsyncStorage.getItem('device_uuid');
+  async _getUUID() {
+    let value = await AsyncStorage.getItem('device_uuid');
+    return value;
+  }
+
+  async _getRSSIThreshold() {
+    let value = await AsyncStorage.getItem('rssi_threshold');
     return value;
   }
 
@@ -130,7 +143,7 @@ export default class Bluetooth extends Component<Props> {
             );
         	})
       	}
-				{this.state.loading ? null : <Text style={styles.terminalTextSuccess}>{this.state.rssi}</Text> }
+				{this.state.loading ? null : <Text style={styles.terminalTextSuccess}>{this.state.rssi}</Text>}
       </View>
     );
   }
