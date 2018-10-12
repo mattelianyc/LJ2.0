@@ -12,8 +12,8 @@ export default class Leash extends React.Component {
   constructor() {
     super();
     this.state = {
-      rssi_threshold: 
-    }
+      rssi_threshold: null,
+    };
   }
 
   _getRSSIThreshold() {
@@ -31,7 +31,7 @@ export default class Leash extends React.Component {
   
   _setRSSIThreshold(e) {
     console.log('set: '+e);
-    AsyncStorage.setItem('rssi_threshold', ''+e+'');
+    AsyncStorage.setItem('rssi_threshold', ""+Math.round(e)+"");
   }
 
   render() {
