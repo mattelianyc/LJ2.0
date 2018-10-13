@@ -61,11 +61,9 @@ export default class Bluetooth extends Component<Props> {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(parseInt(this.state.rssi_threshold));
     this._getRSSIThreshold().then((threshold) => {
-      console.log(threshold);
-      console.log(parseInt(threshold));
       if(prevState.rssi >= parseInt(threshold) && this.state.rssi < parseInt(threshold)) {
+        Vibration.vibrate(this.duration);
         this.notif = new NotificationService();
         this.notif.localNotif();
       }
@@ -119,7 +117,7 @@ export default class Bluetooth extends Component<Props> {
 
                 this._getRSSIThreshold((threshold) => {
 
-                  if( this.kf.filter(data.rssi) < parseInt(threshold) ) {
+                  if( parseInt(this.state.rssi) < parseInt(threshold) ) {
                     this.setState({ alert: true });
                     Vibration.vibrate(this.duration);
                   }

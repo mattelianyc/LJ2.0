@@ -6,6 +6,8 @@ import {
   AsyncStorage,
 } from 'react-native';
 
+import { BleManager } from 'react-native-ble-plx';
+
 export default class Disconnect extends React.Component {
 
   constructor() {
