@@ -61,10 +61,15 @@ export default class Bluetooth extends Component<Props> {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(prevState.rssi >= this.state.rssi_threshold && this.state.rssi < this.state.rssi_threshold) {
-      this.notif = new NotificationService();
-      this.notif.localNotif();
-    }
+    console.log(parseInt(this.state.rssi_threshold));
+    this._getRSSIThreshold().then((threshold) => {
+      console.log(threshold);
+      console.log(parseInt(threshold));
+      if(prevState.rssi >= parseInt(threshold) && this.state.rssi < parseInt(threshold)) {
+        this.notif = new NotificationService();
+        this.notif.localNotif();
+      }
+    })
   }
 
   connectToPeripheral() {
@@ -106,14 +111,20 @@ export default class Bluetooth extends Component<Props> {
           BackgroundTimer.runBackgroundTimer(() => { 
         		this.manager.readRSSIForDevice(device.id)
         			.then((data) => {
-        				this.setState({ 
+        				
+                this.setState({ 
                   rssi: parseFloat(this.kf.filter(data.rssi).toFixed(5)),
                   alert: false, 
                 });
-                if( this.kf.filter(data.rssi) < this.state.rssi_threshold ) {
-                  this.setState({ alert: true });
-                  Vibration.vibrate(this.duration);
-                }
+
+                this._getRSSIThreshold((threshold) => {
+
+                  if( this.kf.filter(data.rssi) < parseInt(threshold) ) {
+                    this.setState({ alert: true });
+                    Vibration.vibrate(this.duration);
+                  }
+
+                })
         			});
           }, 1500);
 
