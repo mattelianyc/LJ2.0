@@ -43,7 +43,7 @@ export default class Leash extends React.Component {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>RSSI Threshold: {this.state.rssi_threshold}</Text>
         <Slider 
-          value={this._getRSSIThreshold} 
+          value={this.state.rssi_threshold} 
           stepValue={1} 
           minimumValue={-110}
           maximumValue={-70}
