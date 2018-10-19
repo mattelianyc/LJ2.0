@@ -89,6 +89,9 @@ export default class Bluetooth extends Component<Props> {
         .then((device) => {  
 
           device.onDisconnected((error, disconnectedDevice) => {
+            concatenatedTerminalArray = this.state.terminal.concat('disconnnected.');
+            this.setState({ terminal: concatenatedTerminalArray });
+            this.setState({ rssi: null });
             this.notif = new NotificationService();
             this.notif.localNotif();
           });

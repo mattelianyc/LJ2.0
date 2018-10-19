@@ -7,8 +7,8 @@ import {
   Slider,
 } from 'react-native';
 
-import Leash from '../components/leash';
-import Disconnect from '../components/disconnect';
+import Leash from '../components/settings/leash';
+import Disconnect from '../components/settings/disconnect';
 
 export default class SettingsScreen extends React.Component {
 
