@@ -25,10 +25,20 @@ export default class HomeScreen extends React.Component {
     this.state = {
       has_uuid: false
     }
-    this._getUUID();
+    this.getUUID();
   }
 
-  _getUUID() {
+  componentDidMount() {
+    console.log(this.props.navigation);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('this shit works')
+    console.log(this.props);
+    console.log(nextProps);
+  }
+
+  getUUID() {
     AsyncStorage.getItem('device_uuid')
       .then((data) => {
         if(data) {

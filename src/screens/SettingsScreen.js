@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import Leash from '../components/settings/leash';
+import Noise from '../components/settings/noise';
 import Disconnect from '../components/settings/disconnect';
 
 export default class SettingsScreen extends React.Component {
@@ -28,6 +29,8 @@ export default class SettingsScreen extends React.Component {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         
         <Leash />
+
+        <Noise />
 
         <Disconnect navigate={ navigate } />
 

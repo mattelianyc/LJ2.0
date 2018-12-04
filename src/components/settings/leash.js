@@ -14,15 +14,15 @@ export default class Leash extends React.Component {
     this.state = {
       rssi_threshold: null,
     };
-    this._setRSSIThreshold = this._setRSSIThreshold.bind(this);
-    this._getRSSIThreshold = this._getRSSIThreshold.bind(this);
+    this.setRSSIThreshold = this.setRSSIThreshold.bind(this);
+    this.getRSSIThreshold = this.getRSSIThreshold.bind(this);
   }
 
   componentWillMount() {
-    this._getRSSIThreshold();
+    this.getRSSIThreshold();
   }
 
-  _getRSSIThreshold() {
+  getRSSIThreshold() {
     AsyncStorage.getItem('rssi_threshold')
       .then((data) => {
         if(data) {
@@ -33,7 +33,7 @@ export default class Leash extends React.Component {
       });
   }
   
-  _setRSSIThreshold(e) {
+  setRSSIThreshold(e) {
     AsyncStorage.setItem('rssi_threshold', ""+Math.round(e)+"");
     this.setState({rssi_threshold: Math.round(e)});
   }
@@ -47,8 +47,8 @@ export default class Leash extends React.Component {
           stepValue={1} 
           minimumValue={-110}
           maximumValue={-70}
-          onSlideComplete={this._setRSSIThreshold} 
-          onValueChange={this._setRSSIThreshold} 
+          onSlideComplete={this.setRSSIThreshold} 
+          onValueChange={this.setRSSIThreshold} 
           style={{ width: 300, color: 'indianred' }} />
       </View>
     );

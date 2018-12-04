@@ -31,16 +31,7 @@ export default class App extends Component<Props> {
 
   constructor() {
     super();
-
     PushNotificationIOS.requestPermissions();
-    // firebase.messaging().getToken()
-    //   .then(fcmToken => {
-    //     if (fcmToken) {
-    //       console.log(fcmToken);
-    //     } else {
-    //       console.log('no tokes');
-    //     } 
-    //   });
   }
 
   render() {

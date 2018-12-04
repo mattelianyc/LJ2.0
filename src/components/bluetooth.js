@@ -50,96 +50,100 @@ export default class Bluetooth extends Component<Props> {
   }
 
   componentDidMount() {
-    this._getRSSIThreshold().then((data) => {
-      console.log(data);
-      if (data) {
-        this.setState({ rssi_threshold: data });
-      } else {
-        this.setState({ rssi_threshold: -94 });
-      }
+    this.getRSSIThreshold()
+      .then((data) => {
+        console.log(data);
+        if (data) {
+          this.setState({ rssi_threshold: Number( data ) });
+        } else {
+          this.setState({ rssi_threshold: -94 });
+        }
     });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    this._getRSSIThreshold().then((threshold) => {
-      if(prevState.rssi >= parseInt(threshold) && this.state.rssi < parseInt(threshold)) {
-        Vibration.vibrate(this.duration);
-        this.notif = new NotificationService();
-        this.notif.localNotif();
-      }
-    })
+    this.getRSSIThreshold()
+      .then((threshold) => {
+        if(prevState.rssi >= parseInt(threshold) && this.state.rssi < parseInt(threshold)) {
+          Vibration.vibrate(this.duration);
+          this.notif = new NotificationService();
+          this.notif.localNotif();
+        }
+      })
   }
 
   connectToPeripheral() {
     // GET UUID
-    this._getUUID().then((data) => {
-      
-      let device_uuid = data;
-
-      // STATUS BOX
-      let concatenatedTerminalArray = this.state.terminal.concat('initializing');
-      this.setState({ terminal: concatenatedTerminalArray });
-      concatenatedTerminalArray = this.state.terminal.concat('peripheral discovered');
-      this.setState({ terminal: concatenatedTerminalArray });
-      concatenatedTerminalArray = this.state.terminal.concat('connecting');
-      this.setState({ terminal: concatenatedTerminalArray });
-      
-      // CONNECT 
-      this.manager.connectToDevice(device_uuid)
-        .then((device) => {  
-
-          device.onDisconnected((error, disconnectedDevice) => {
-            concatenatedTerminalArray = this.state.terminal.concat('disconnnected.');
-            this.setState({ terminal: concatenatedTerminalArray });
-            this.setState({ rssi: null });
-            this.notif = new NotificationService();
-            this.notif.localNotif();
-          });
-
-          // STATUS BOX
-          concatenatedTerminalArray = this.state.terminal.concat('discovering services and characteristics');
-          this.setState({ terminal: concatenatedTerminalArray });
-          concatenatedTerminalArray = this.state.terminal.concat('setting notifications');
-          this.setState({ terminal: concatenatedTerminalArray });
-        	concatenatedTerminalArray= this.state.terminal.concat('reading rssi');
-  				this.setState({ terminal: concatenatedTerminalArray });
-        	concatenatedTerminalArray = this.state.terminal.concat('filtering rssi...');
-          this.setState({ terminal: concatenatedTerminalArray });
-
-          this.setState({ loading: false });
-
-          // BG RSSI THREAD
-          BackgroundTimer.runBackgroundTimer(() => { 
-        		this.manager.readRSSIForDevice(device.id)
-        			.then((data) => {
-        				
-                this.setState({ 
-                  rssi: parseFloat(this.kf.filter(data.rssi).toFixed(5)),
-                  alert: false, 
-                });
-
-                this._getRSSIThreshold((threshold) => {
-
-                  if( parseInt(this.state.rssi) < parseInt(threshold) ) {
-                    this.setState({ alert: true });
-                    Vibration.vibrate(this.duration);
-                  }
-
-                })
-        			});
-          }, 1500);
-
-        });
+    this.getUUID()
+      .then((data) => {
         
-    });
+        let device_uuid = data;
+
+        // STATUS BOX
+        let concatenatedTerminalArray = this.state.terminal.concat('initializing');
+        this.setState({ terminal: concatenatedTerminalArray });
+        concatenatedTerminalArray = this.state.terminal.concat('peripheral discovered');
+        this.setState({ terminal: concatenatedTerminalArray });
+        concatenatedTerminalArray = this.state.terminal.concat('connecting');
+        this.setState({ terminal: concatenatedTerminalArray });
+        
+        // CONNECT 
+        this.manager.connectToDevice(device_uuid)
+          .then((device) => {  
+
+            device.onDisconnected((error, disconnectedDevice) => {
+              concatenatedTerminalArray = this.state.terminal.concat('disconnnected.');
+              this.setState({ terminal: concatenatedTerminalArray });
+              this.setState({ rssi: null });
+              this.notif = new NotificationService();
+              this.notif.localNotif();
+            });
+
+            // STATUS BOX
+            concatenatedTerminalArray = this.state.terminal.concat('discovering services and characteristics');
+            this.setState({ terminal: concatenatedTerminalArray });
+            concatenatedTerminalArray = this.state.terminal.concat('setting notifications');
+            this.setState({ terminal: concatenatedTerminalArray });
+          	concatenatedTerminalArray= this.state.terminal.concat('reading rssi');
+    				this.setState({ terminal: concatenatedTerminalArray });
+          	concatenatedTerminalArray = this.state.terminal.concat('filtering rssi...');
+            this.setState({ terminal: concatenatedTerminalArray });
+
+            this.setState({ loading: false });
+
+            // BG RSSI THREAD
+            BackgroundTimer.runBackgroundTimer(() => { 
+          		this.manager.readRSSIForDevice(device.id)
+          			.then((data) => {
+          				
+                  this.setState({ 
+                    rssi: Number( parseFloat(this.kf.filter(data.rssi).toFixed(5)) ),
+                    alert: false, 
+                  });
+
+                  this.getRSSIThreshold((threshold) => {
+
+                    if( parseInt(this.state.rssi) < parseInt(threshold) ) {
+                      this.setState({ alert: true });
+                      Vibration.vibrate(this.duration);
+                    }
+
+                  });
+
+          			});
+            }, 1500);
+
+          });
+          
+      });
   }	
 
-  async _getUUID() {
+  async getUUID() {
     let value = await AsyncStorage.getItem('device_uuid');
     return value;
   }
 
-  async _getRSSIThreshold() {
+  async getRSSIThreshold() {
     let value = await AsyncStorage.getItem('rssi_threshold');
     return value;
   }

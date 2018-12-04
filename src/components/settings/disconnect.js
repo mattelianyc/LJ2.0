@@ -17,7 +17,7 @@ export default class Disconnect extends React.Component {
 
   disconnectAndFlushAsync() {
     AsyncStorage.setItem('device_uuid', '');
-    this.props.navigate('Home');
+    this.props.navigate('Home', { has_uuid: false });
   }
   
   render() {
