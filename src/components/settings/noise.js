@@ -54,8 +54,8 @@ export default class Noise extends React.Component {
   }
   
   setExternalNoiseParam(e) {
-    AsyncStorage.setItem('external_noise', ""+Number(parseFloat(e).toFixed(2))+"");
-    this.setState({external_noise: Number(parseFloat(e).toFixed(2))});
+    AsyncStorage.setItem('external_noise', ""+parseFloat(e).toFixed(2)+"");
+    this.setState({external_noise: Number(parseFloat(e).toFixed(2)) });
   }
 
   render() {
