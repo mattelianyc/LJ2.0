@@ -26,9 +26,9 @@ export default class Leash extends React.Component {
     AsyncStorage.getItem('rssi_threshold')
       .then((data) => {
         if(data) {
-          this.setState({ rssi_threshold: data });
+          this.setState({ rssi_threshold: Number(data) });
         } else {
-          this.setState({ rssi_threshold: -88 });
+          this.setState({ rssi_threshold: Number(-88) });
         }
       });
   }

@@ -52,11 +52,10 @@ export default class Bluetooth extends Component<Props> {
   componentDidMount() {
     this.getRSSIThreshold()
       .then((data) => {
-        console.log(data);
         if (data) {
           this.setState({ rssi_threshold: Number( data ) });
         } else {
-          this.setState({ rssi_threshold: -94 });
+          this.setState({ rssi_threshold: Number(-94) });
         }
     });
   }

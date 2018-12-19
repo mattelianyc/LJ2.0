@@ -30,7 +30,7 @@ export default class Noise extends React.Component {
     AsyncStorage.getItem('internal_noise')
       .then((data) => {
         if(data) {
-          this.setState({ 'internal_noise': data });
+          this.setState({ 'internal_noise': Number(data) });
         } else {
           return;
         }
@@ -38,7 +38,7 @@ export default class Noise extends React.Component {
   }
 
   setInternalNoiseParam(e) {
-    AsyncStorage.setItem('internal_noise', ""+Number(parseFloat(e).toFixed(2))+"");
+    AsyncStorage.setItem('internal_noise', ""+parseFloat(e).toFixed(2)+"");
     this.setState({internal_noise: Number(parseFloat(e).toFixed(2))});
   }
 
@@ -46,7 +46,7 @@ export default class Noise extends React.Component {
     AsyncStorage.getItem('external_noise')
       .then((data) => {
         if(data) {
-          this.setState({ 'external_noise': data });
+          this.setState({ 'external_noise': Number(data) });
         } else {
           return;
         }
@@ -61,7 +61,6 @@ export default class Noise extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-
         <Text>Internal Noise: {this.state.internal_noise}</Text>
         <Slider 
           value={this.state.internal_noise} 
@@ -81,7 +80,6 @@ export default class Noise extends React.Component {
           onSlideComplete={this.setExternalNoiseParam} 
           onValueChange={this.setExternalNoiseParam} 
           style={{ width: 300, color: 'indianred' }} />
-
       </View>
     );
   }
